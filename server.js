@@ -33,4 +33,4 @@ function requestHandler(req, res) {
 	getFile((localFolder + fileName), res, page404);
 };
  
-http.createServer(requestHandler).listen(process.ENV.PORT);
+http.createServer(requestHandler).listen((process.env.PORT || 3000));
