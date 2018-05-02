@@ -23,17 +23,19 @@ app.get('/', (request, response) => {
 })
 
 app.get('/play', (req, res) => {
-  if (!req.query.name) {
+  if (!req.query.nickname) {
     res.status(400).json({ error: 'Name is required' });
   }
+
+  const { nickname } = req.query
   
-  if (req.query.name.length > 20) {
-    res.status(400).json({ error: 'Name should be 20 characters maximum' });
+  if (nickname.length <= 2 || nickname.length > 20) {
+    res.status(400).json({ error: 'Name should be 3-20 characters in length' });
   }
   
   
   const id = crypto.randomBytes(16).toString('base64')
-  res.status(200).json({ id, name: req.query.name });
+  res.status(200).json({ id, nickname });
 })
 
 app.listen(app.get('port'), function() {
