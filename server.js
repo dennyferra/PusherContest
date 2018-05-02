@@ -1,5 +1,6 @@
 const express = require('express')
-const crypto = require('crypto');
+const bodyParser = require('body-parser')
+const crypto = require('crypto')
 
 const app = express()
 
@@ -9,6 +10,8 @@ const game = {
 
 app.set('port', (process.env.PORT || 5000))
 app.use('/public', express.static(__dirname + '/public'))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
   response.sendFile('index.html', {root: __dirname + '/public/'});
