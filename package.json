@@ -3,6 +3,9 @@
     "version" : "0.1.0",
     "description" : "DEV TO Pusher Contest https://dev.to/devteam/first-ever-dev-contest-build-a-realtime-app-with-pusher-4nhp",
     "main" : "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
     "repository" : {
         "type" : "git",
         "url" : "git://github.com/dennyferra/pushercontest.git"
