@@ -28,7 +28,7 @@ app.get('/play', (req, res) => {
   
   
   const id = crypto.randomBytes(16).toString('base64')
-  res.status(200).json({ id, req.query.name });
+  res.status(200).json({ id, name: req.query.name });
 })
 
 app.listen(app.get('port'), function() {
