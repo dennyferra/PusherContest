@@ -6,6 +6,9 @@
     "scripts": {
         "start": "node server.js"
     },
+    "engines": {
+        "node": "10.x"
+    },
     "repository" : {
         "type" : "git",
         "url" : "git://github.com/dennyferra/pushercontest.git"
