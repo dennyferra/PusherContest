@@ -57,11 +57,12 @@ app.get('/play', (req, res) => {
 })
 
 app.get('/pusher/auth', function(req, res) {
-  console.log('Pusher Auth', req.body, req.headers)
   var socketId = req.body.socket_id;
   var channel = req.body.channel_name;
   var userId = req.headers['X-UserId'];
-  var callback = query.callback;
+  var callback = req.query.callback;
+
+  console.log('Pusher Auth', socketId, channel, userId, callback)
 
   if (!userId) {
     res.sendStatus(403)
