@@ -57,10 +57,11 @@ app.get('/play', (req, res) => {
 })
 
 app.post('/pusher/auth', (req, res) => {
-  console.log('Pusher Auth', req.body, req.headers)
   var socketId = req.body.socket_id;
   var channel = req.body.channel_name;
-  var userId = req.headers['X-UserId'];
+  var userId = req.headers['x-userid'];
+
+  console.log('Pusher Auth', socketId, channel, userId)
 
   if (!userId) {
     res.sendStatus(403)
@@ -68,6 +69,8 @@ app.post('/pusher/auth', (req, res) => {
   }
 
   const user = game.users.filter(user => user.id === userId);
+
+  console.log('User?', user)
 
   if (user.length <= 0) {
     res.sendStatus(403)
