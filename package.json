@@ -1,25 +1,26 @@
 {
-    "name" : "pusher-contest",
-    "version" : "0.1.0",
-    "description" : "DEV TO Pusher Contest https://dev.to/devteam/first-ever-dev-contest-build-a-realtime-app-with-pusher-4nhp",
-    "main" : "server.js",
+    "name": "pusher-contest",
+    "version": "0.1.0",
+    "description": "DEV TO Pusher Contest https://dev.to/devteam/first-ever-dev-contest-build-a-realtime-app-with-pusher-4nhp",
+    "main": "server.js",
     "scripts": {
         "start": "node server.js"
     },
     "dependencies": {
-        "express": "^4.13.3"
+        "express": "^4.13.3",
+        "pusher": "^1.5.1"
     },
     "engines": {
         "node": "10.x"
     },
-    "repository" : {
-        "type" : "git",
-        "url" : "git://github.com/dennyferra/pushercontest.git"
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/dennyferra/pushercontest.git"
     },
-    "homepage" : "https://github.com/dennyferra/pushercontest",
-    "author" : {
-        "name" : "Denny Ferrassoli",
-        "url" : "http://www.dennyferra.com"
+    "homepage": "https://github.com/dennyferra/pushercontest",
+    "author": {
+        "name": "Denny Ferrassoli",
+        "url": "http://www.dennyferra.com"
     },
-    "license" : "MIT"
+    "license": "MIT"
 }

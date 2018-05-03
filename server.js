@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const crypto = require('crypto')
+const Pusher = require('pusher')
 
 const app = express()
 
@@ -40,4 +41,16 @@ app.get('/play', (req, res) => {
 
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
+
+  var pusher = new Pusher({
+    appId: process.env.APPID,
+    key: process.env.KEY,
+    secret: process.env.SECRET,
+    cluster: 'us2',
+    encrypted: true
+  });
+
+  pusher.trigger('my-channel', 'my-event', {
+    "message": "hello world"
+  });
 })
