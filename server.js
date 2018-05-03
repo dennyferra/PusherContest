@@ -56,11 +56,12 @@ app.get('/play', (req, res) => {
   res.status(200).json(user)
 })
 
-app.post('/pusher/auth', function(req, res) {
+app.get('/pusher/auth', function(req, res) {
   console.log('Pusher Auth', req.body, req.headers)
   var socketId = req.body.socket_id;
   var channel = req.body.channel_name;
   var userId = req.headers['X-UserId'];
+  var callback = query.callback;
 
   if (!userId) {
     res.sendStatus(403)
@@ -80,8 +81,15 @@ app.post('/pusher/auth', function(req, res) {
       name: user[0].nickname
     }
   }
-  var auth = pusher.authenticate(socketId, channel, presenceData)
-  res.send(auth)
+
+  var auth = JSON.stringify(pusher.authenticate(socketId, channel, presenceData));
+  var cb = callback.replace(/\"/g,"") + "(" + auth + ");";
+
+  res.set({
+    "Content-Type": "application/javascript"
+  });
+
+  res.send(cb);
 });
 
 app.listen(app.get('port'), function() {
