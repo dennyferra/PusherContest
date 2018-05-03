@@ -6,7 +6,7 @@ const Pusher = require('pusher')
 const app = express()
 
 const game = {
-  players: []
+  users: []
 }
 
 app.set('port', (process.env.PORT || 5000))
@@ -25,19 +25,55 @@ app.get('/', (request, response) => {
 
 app.get('/play', (req, res) => {
   if (!req.query.nickname) {
-    res.status(400).json({ error: 'Name is required' });
+    res.status(400).json({ error: 'Name is required' })
+    return
   }
 
-  const { nickname } = req.query
+  const nickname = req.query.nickname.trim()
+  const nicknameLower = nickname.toLowerCase()
   
   if (nickname.length <= 2 || nickname.length > 20) {
-    res.status(400).json({ error: 'Name should be 3-20 characters in length' });
+    res.status(400).json({ error: 'Name should be 3-20 characters in length' })
+    return
+  }
+
+  if (game.users.some(s => s.nicknameLower === nicknameLower)) {
+    res.status(400).json({ error: 'Nickname is not unique' })
+    return
   }
   
-  
   const id = crypto.randomBytes(16).toString('base64')
-  res.status(200).json({ id, nickname });
+  const user = { id, nickname, nicknameLower }
+  game.users.push(user)
+  res.status(200).json(user)
 })
+
+app.post('/pusher/auth', function(req, res) {
+  var socketId = req.body.socket_id;
+  var channel = req.body.channel_name;
+  var userId = req.headers['X-UserId'];
+
+  if (!userId) {
+    res.sendStatus(403)
+    return
+  }
+
+  const user = game.users.filter(user => user.id === userId);
+
+  if (user.length <= 0) {
+    res.sendStatus(403)
+    return
+  }
+
+  var presenceData = {
+    user_id: user[0].id,
+    user_info: {
+      name: user[0].nickname
+    }
+  }
+  var auth = pusher.authenticate(socketId, channel, presenceData)
+  res.send(auth)
+});
 
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
