@@ -5,6 +5,14 @@ const Pusher = require('pusher')
 
 const app = express()
 
+const pusher = new Pusher({
+  appId: process.env.APPID,
+  key: process.env.KEY,
+  secret: process.env.SECRET,
+  cluster: 'us2',
+  encrypted: true
+});
+
 const game = {
   users: []
 }
@@ -89,14 +97,6 @@ app.post('/pusher/auth', (req, res) => {
 
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
-
-  var pusher = new Pusher({
-    appId: process.env.APPID,
-    key: process.env.KEY,
-    secret: process.env.SECRET,
-    cluster: 'us2',
-    encrypted: true
-  });
 
   pusher.trigger('game', 'user.join', {
     "message": "hello world"
