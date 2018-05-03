@@ -53,6 +53,8 @@ app.post('/pusher/auth', function(req, res) {
   var channel = req.body.channel_name;
   var userId = req.headers['X-UserId'];
 
+console.log('Pusher Auth', socketId, channel, userId)
+
   if (!userId) {
     res.sendStatus(403)
     return
