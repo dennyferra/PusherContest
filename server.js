@@ -50,7 +50,7 @@ app.listen(app.get('port'), function() {
     encrypted: true
   });
 
-  pusher.trigger('my-channel', 'my-event', {
+  pusher.trigger('game', 'user.join', {
     "message": "hello world"
   });
 })
