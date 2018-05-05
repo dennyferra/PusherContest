@@ -4,7 +4,6 @@ const crypto = require('crypto');
 const Game = require('./game');
 
 const app = express();
-
 const game = new Game();
 
 app.set('port', process.env.PORT || 5000);
@@ -88,6 +87,7 @@ app.post('/pusher/auth', (req, res) => {
 });
 
 app.post('/pusher/hook', (req, res) => {
+  console.log('hook', game.webhook);
   game.webhook(req, res);
 });
 
