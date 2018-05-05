@@ -66,17 +66,12 @@ app.post('/pusher/auth', (req, res) => {
   var channel = req.body.channel_name;
   var userId = req.headers['x-userid'];
 
-  console.log('Pusher Auth', socketId, channel, userId);
-
   if (!userId) {
     res.sendStatus(403);
     return;
   }
 
   const user = game.users.filter(user => user.id === userId);
-
-  console.log('User?', user);
-
   if (user.length <= 0) {
     res.sendStatus(403);
     return;
@@ -88,14 +83,13 @@ app.post('/pusher/auth', (req, res) => {
       name: user[0].nickname
     }
   };
-  var auth = pusher.authenticate(socketId, channel, presenceData);
+  var auth = game.pusher.authenticate(socketId, channel, presenceData);
+  console.log('User auth', auth);
   res.send(auth);
 });
 
+app.post('/webhook', game.webhook);
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running at localhost:' + app.get('port'));
-
-  pusher.trigger('game', 'user.join', {
-    message: 'hello world'
-  });
 });

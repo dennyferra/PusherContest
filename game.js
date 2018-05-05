@@ -12,26 +12,37 @@ class Game {
 
     this.presence = null;
     this.users = [];
+    this.synced = false;
   }
 
-  subscribe() {
-    this.presence = this.pusher.subscribe('presence-game');
-    this.presence.bind('pusher:subscription_error', data => {
-      console.log('presence.subscription_error', data);
-    });
+  init() {
+    this.synced = true;
 
-    this.presence.bind('pusher:subscription_succeeded', members => {
-      console.log('presence.subscription_succeeded', members);
-      //members.each(m => this.rootStore.game.members.push(m));
-    });
+    // TODO: API Request to get users in presence channel
+  }
 
-    this.presence.bind('pusher:member_added', member => {
-      // todo
-    });
+  webhook(req, res) {
+    if (!this.synced) return;
 
-    this.presence.bind('pusher:member_removed', member => {
-      // todo
-    });
+    const signature = req.headers['x-pusher-signature'];
+    console.log('Webhook Signature', signature);
+    if (!signature) return;
+
+    const data = req.body;
+    if (data.events) {
+      data.events.forEach(ev => {
+        switch (ev.name) {
+          case 'member_added':
+            const id = ev.user_id;
+            break;
+          case 'member_removed':
+            const id = ev.user_id;
+            break;
+          default:
+            console.log('Unhandled event', ev);
+        }
+      });
+    }
   }
 }
 
