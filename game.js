@@ -22,11 +22,15 @@ class Game {
   }
 
   webhook(req, res) {
-    if (!this.synced) return;
+    if (!this.synced) {
+      res.sendStatus(200);
+    }
 
     const signature = req.headers['x-pusher-signature'];
     console.log('Webhook Signature', signature);
-    if (!signature) return;
+    if (!signature) {
+      return sendStatus(403);
+    }
 
     const data = req.body;
     if (data.events) {
