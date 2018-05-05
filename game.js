@@ -1,3 +1,5 @@
+const Pusher = require('pusher');
+
 class Game {
   constructor() {
     this.pusher = new Pusher({

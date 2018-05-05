@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-const Pusher = require('pusher');
 const Game = require('./game');
 
 const app = express();
