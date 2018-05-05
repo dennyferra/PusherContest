@@ -49,6 +49,8 @@ class Game {
         }
       });
     }
+
+    res.sendStatus(200);
   }
 }
 
