@@ -15,7 +15,7 @@ class Game {
   }
 
   subscribe() {
-    this.presence = pusher.subscribe('presence-game');
+    this.presence = this.pusher.subscribe('presence-game');
     this.presence.bind('pusher:subscription_error', data => {
       console.log('presence.subscription_error', data);
     });
