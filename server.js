@@ -87,7 +87,7 @@ app.post('/pusher/auth', (req, res) => {
   res.send(auth);
 });
 
-app.post('/webhook', game.webhook);
+app.post('/pusher/hook', game.webhook);
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running at localhost:' + app.get('port'));
