@@ -87,7 +87,6 @@ app.post('/pusher/auth', (req, res) => {
 });
 
 app.post('/pusher/hook', (req, res) => {
-  console.log('hook', game.webhook);
   game.webhook(req, res);
 });
 

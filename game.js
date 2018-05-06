@@ -35,6 +35,9 @@ class Game {
     }
 
     const data = req.body;
+
+    console.log('hook body', data);
+
     if (data.events) {
       data.events.forEach(ev => {
         let id;
