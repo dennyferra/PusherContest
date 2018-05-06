@@ -36,20 +36,25 @@ class Game {
 
     const data = req.body;
 
-    console.log('hook body', data);
+    // Example
+    // { channel: 'presence-game',
+    // user_id: '+QksjftPxQuBRA4DX2WkyA==',
+    // name: 'member_removed' }
 
     if (data.events) {
       data.events.forEach(ev => {
-        let id;
+        let index;
         switch (ev.name) {
           case 'member_added':
-            id = ev.user_id;
+            index = this.users.indexOf(ev.user_id);
+            if (index === -1) this.users.push(ev.user_id);
             break;
           case 'member_removed':
-            id = ev.user_id;
+            index = this.users.indexOf(ev.user_id);
+            if (index >= 0) this.users.slice(index, 1);
             break;
           default:
-            console.log('Unhandled event', ev);
+            console.info('Unhandled event', ev);
         }
       });
     }
