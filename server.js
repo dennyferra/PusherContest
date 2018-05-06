@@ -43,7 +43,8 @@ app.get('/game', (req, res) => {
   res.status(200).json({
     players: game.users ? game.users.length : 0,
     lastPrice: 1001.032,
-    end: new Date(date)
+    end: new Date(date),
+    game: game.users
   });
 });
 
