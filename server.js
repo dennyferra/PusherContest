@@ -91,6 +91,6 @@ app.post('/pusher/hook', (req, res) => {
   game.webhook(req, res);
 });
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
   console.log('Node app is running at localhost:' + app.get('port'));
 });

@@ -37,12 +37,13 @@ class Game {
     const data = req.body;
     if (data.events) {
       data.events.forEach(ev => {
+        let id;
         switch (ev.name) {
           case 'member_added':
-            const id = ev.user_id;
+            id = ev.user_id;
             break;
           case 'member_removed':
-            const id = ev.user_id;
+            id = ev.user_id;
             break;
           default:
             console.log('Unhandled event', ev);
