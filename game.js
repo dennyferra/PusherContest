@@ -12,7 +12,7 @@ class Game {
 
     this.presence = null;
     this.users = [];
-    this.synced = false;
+    this.synced = true;
   }
 
   init() {
