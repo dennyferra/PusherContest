@@ -62,7 +62,7 @@ app.get('/play', (req, res) => {
     return;
   }
 
-  if (game.users.some(s => s.nicknameLower === nicknameLower)) {
+  if (game.users.some(s => s.nicknameLower && (s.nicknameLower === nicknameLower)) {
     res.status(400).json({ error: 'Nickname is not unique' });
     return;
   }

@@ -21,6 +21,15 @@ class Game {
     // TODO: API Request to get users in presence channel
   }
 
+  // ISSUE:
+
+  // game: Array[2]
+  // 0: Object
+  // id: "7yDBlhVZLyyZoLTjJDNptw=="
+  // nickname: "ggggggggggg"
+  // nicknameLower: "ggggggggggg"
+  // 1: "7yDBlhVZLyyZoLTjJDNptw=="
+
   webhook(req, res) {
     if (!this.synced) {
       res.sendStatus(200);
@@ -46,11 +55,11 @@ class Game {
         let index;
         switch (ev.name) {
           case 'member_added':
-            index = this.users.indexOf(ev.user_id);
-            if (index === -1) this.users.push(ev.user_id);
+            index = this.users.findIndex(f => f.id === ev.user_id);
+            if (index === -1) this.users.push({ id: ev.user_id });
             break;
           case 'member_removed':
-            index = this.users.indexOf(ev.user_id);
+            index = this.users.findIndex(f => f.id === ev.user_id);
             if (index >= 0) this.users.slice(index, 1);
             break;
           default:
