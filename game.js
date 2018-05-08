@@ -19,13 +19,8 @@ class Game {
       lastPrice: 0,
       end: new Date()
     };
-  }
 
-  init() {
-    this.synced = true;
     this.timerDone();
-
-    // TODO: API Request to get users in presence channel
   }
 
   timerDone() {
