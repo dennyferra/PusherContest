@@ -39,8 +39,8 @@ app.get('/game', (req, res) => {
 
   res.status(200).json({
     players: game.users ? game.users.length : 0,
-    lastPrice: game.lastPrice,
-    end: new Date(game.end),
+    lastPrice: game.round.lastPrice,
+    end: new Date(game.round.end),
     game: game.users
   });
 });
