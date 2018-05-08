@@ -13,6 +13,15 @@ class Game {
     this.presence = null;
     this.users = [];
     this.synced = true;
+
+    // 5 minutes from now
+    var date = new Date().getTime();
+    date += 5 * 60 * 1000;
+
+    this.round = {
+      lastPrice: 0,
+      end: date
+    };
   }
 
   init() {

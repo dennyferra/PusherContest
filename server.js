@@ -36,14 +36,11 @@ app.get('/', (request, response) => {
 
 app.get('/game', (req, res) => {
   // TODO: This is just for testing
-  // 5 minutes from now
-  var date = new Date().getTime();
-  date += 5 * 60 * 1000;
 
   res.status(200).json({
     players: game.users ? game.users.length : 0,
-    lastPrice: 1001.032,
-    end: new Date(date),
+    lastPrice: game.lastPrice,
+    end: new Date(game.end),
     game: game.users
   });
 });
