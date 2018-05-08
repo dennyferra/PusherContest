@@ -29,7 +29,7 @@ class Game {
     var date = new Date().getTime();
     date += 5 * 60 * 1000;
     this.round.end = new Date(date);
-    this.timeout = setTimeout(this.timerDone, 300);
+    this.timeout = setTimeout(this.timerDone.bind(this), 300 * 1000);
   }
 
   // ISSUE:
