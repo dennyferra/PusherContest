@@ -60,7 +60,7 @@ class Game {
             break;
           case 'member_removed':
             index = this.users.findIndex(f => f.id === ev.user_id);
-            console.log('Member Removed', index);
+            console.log('Member Removed', index, ev);
             if (index >= 0) this.users.slice(index, 1);
             console.log('Member Removed', this.users);
             break;
