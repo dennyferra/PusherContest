@@ -58,16 +58,15 @@ class Game {
   getCurrentPrice() {
     return fetch(
       'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD'
-    ).then(function(d, msg, xhr) {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        if (d && d.RAW && d.RAW.ETH && d.RAW.ETH.USD) {
-          data = d.RAW.ETH.USD;
-          return data;
+    )
+      .then(res => res.json())
+      .then(body => {
+        if (body && body.RAW && body.RAW.ETH && body.RAW.ETH.USD) {
+          return body.RAW.ETH.USD;
         }
-      }
 
-      return null;
-    });
+        return null;
+      });
   }
 
   // ISSUE:
