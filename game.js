@@ -1,4 +1,5 @@
 const Pusher = require('pusher');
+const fetch = require('node-fetch');
 
 class Game {
   constructor() {
