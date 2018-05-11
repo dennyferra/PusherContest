@@ -11,7 +11,7 @@ class Game {
       encrypted: true
     });
 
-    this.roundTime = 30 * 1000;
+    this.roundTime = 300 * 1000;
     this.newRoundWait = 15 * 1000;
 
     this.presence = null;
@@ -30,12 +30,10 @@ class Game {
   timerDone() {
     if (this.timeout) clearTimeout(this.timeout);
 
-    console.log('Timer done');
     this.pusher.trigger('game', 'status', { action: 'round-end' });
 
     this.getCurrentPrice()
       .then(data => {
-        console.log('Current price', data);
         let nextPrice = (data && data.PRICE) || this.lastPrice;
 
         // TODO: Calculate winner(s)
@@ -45,7 +43,6 @@ class Game {
         });
 
         setTimeout(() => {
-          // 5 minutes from now
           var date = new Date().getTime();
           date += this.roundTime;
           this.round.end = new Date(date);
