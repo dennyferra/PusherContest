@@ -48,7 +48,7 @@ class Game {
           this.round.end = new Date(date);
           this.round.lastPrice = nextPrice;
 
-          console.log('Round starting', round);
+          console.log('Round starting', this.round);
 
           this.pusher.trigger('game', 'status', {
             action: 'round-start',
