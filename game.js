@@ -25,11 +25,48 @@ class Game {
 
   timerDone() {
     if (this.timeout) clearTimeout(this.timeout);
-    // 5 minutes from now
-    var date = new Date().getTime();
-    date += 5 * 60 * 1000;
-    this.round.end = new Date(date);
-    this.timeout = setTimeout(this.timerDone.bind(this), 300 * 1000);
+
+    this.pusher.trigger('game', 'status', { action: 'round-end' });
+
+    this.getCurrentPrice().then(data => {
+      let nextPrice = data || this.lastPrice;
+
+      // TODO: Calculate winner(s)
+      this.pusher.trigger('game', 'status', {
+        action: 'round-winner',
+        test: 123
+      });
+
+      setTimeout(() => {
+        // 5 minutes from now
+        var date = new Date().getTime();
+        date += 1 * 60 * 1000;
+        this.round.end = new Date(date);
+        this.lastPrice = nextPrice;
+
+        this.pusher.trigger('game', 'status', {
+          action: 'round-start',
+          round: this.round
+        });
+
+        this.timeout = setTimeout(this.timerDone.bind(this), 300 * 1000);
+      }, 15 * 1000);
+    });
+  }
+
+  getCurrentPrice() {
+    return fetch(
+      'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD'
+    ).then(function(d, msg, xhr) {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        if (d && d.RAW && d.RAW.ETH && d.RAW.ETH.USD) {
+          data = d.RAW.ETH.USD;
+          return data;
+        }
+      }
+
+      return null;
+    });
   }
 
   // ISSUE:
