@@ -11,6 +11,9 @@ class Game {
       encrypted: true
     });
 
+    this.roundTime = 30 * 1000;
+    this.newRoundWait = 15 * 1000;
+
     this.presence = null;
     this.users = [];
     this.synced = true;
@@ -33,7 +36,7 @@ class Game {
     this.getCurrentPrice()
       .then(data => {
         console.log('Current price', data);
-        let nextPrice = data || this.lastPrice;
+        let nextPrice = (data && data.PRICE) || this.lastPrice;
 
         // TODO: Calculate winner(s)
         this.pusher.trigger('game', 'status', {
@@ -44,7 +47,7 @@ class Game {
         setTimeout(() => {
           // 5 minutes from now
           var date = new Date().getTime();
-          date += 1 * 60 * 1000;
+          date += this.roundTime;
           this.round.end = new Date(date);
           this.round.lastPrice = nextPrice;
 
@@ -55,14 +58,14 @@ class Game {
             round: this.round
           });
 
-          this.timeout = setTimeout(this.timerDone.bind(this), 300 * 1000);
-        }, 15 * 1000);
+          this.timeout = setTimeout(this.timerDone.bind(this), this.roundTime);
+        }, this.newRoundWait);
       })
       .catch(err => {
-        console.error(err);
+        console.error('ERROR', err);
 
         var date = new Date().getTime();
-        date += 1 * 60 * 1000;
+        date += this.roundTime;
         this.round.end = new Date(date);
         this.round.lastPrice = nextPrice;
 
@@ -70,6 +73,8 @@ class Game {
           action: 'round-start',
           round: this.round
         });
+
+        this.timeout = setTimeout(this.timerDone.bind(this), this.roundTime);
       });
   }
 
