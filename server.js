@@ -72,6 +72,36 @@ app.get('/play', (req, res) => {
   res.status(200).json(user);
 });
 
+app.post('/guess', (req, res) => {
+  const user = req.body.user;
+  const guess = req.body.guess;
+
+  if (!user || !guess || !user.id) {
+    res.status(400).json({ error: 'User or Guess cannot be null' });
+    return;
+  }
+
+  if (parseFloat(guess) !== guess) {
+    res.status(400).json({ error: 'Guess is not valid' });
+    return;
+  }
+
+  const user = game.users.filter(f => f.id === user.id);
+  if (user && !user.guess) {
+    user.guess = guess;
+
+    res.status(200).json({
+      nickname: user.nickname,
+      guess: true,
+      direction: guess > game.lastPrice ? 1 : guess < game.lastPrice ? -1 : 0
+    });
+
+    return;
+  }
+
+  res.status(400).json({ error: 'Invalid user' });
+});
+
 app.post('/pusher/auth', (req, res) => {
   var socketId = req.body.socket_id;
   var channel = req.body.channel_name;
