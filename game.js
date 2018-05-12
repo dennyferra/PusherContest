@@ -11,7 +11,7 @@ class Game {
       encrypted: true
     });
 
-    this.roundTime = 120 * 1000;
+    this.roundTime = 60 * 1000;
     this.newRoundWait = 15 * 1000;
 
     this.presence = null;
