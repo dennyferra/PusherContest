@@ -86,12 +86,12 @@ app.post('/guess', (req, res) => {
     return;
   }
 
-  const user = game.users.filter(f => f.id === user.id);
-  if (user && !user.guess) {
-    user.guess = guess;
+  const gameUser = game.users.filter(f => f.id === user.id);
+  if (gameUser && !gameUser.guess) {
+    gameUser.guess = guess;
 
     res.status(200).json({
-      nickname: user.nickname,
+      nickname: gameUser.nickname,
       guess: true,
       direction: guess > game.lastPrice ? 1 : guess < game.lastPrice ? -1 : 0
     });
