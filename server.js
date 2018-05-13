@@ -94,21 +94,18 @@ app.post('/guess', (req, res) => {
   if (gameUser && !gameUser.guess) {
     gameUser.guess = guess;
 
+    const data = {
+      nickname: gameUser.nickname,
+      guess: true,
+      direction:
+        guess > game.round.lastPrice ? 1 : guess < game.round.lastPrice ? -1 : 0
+    };
+
     game.pusher.trigger('game', 'status', {
-      action: 'guess',
-      data: {
-        nickname: gameUser.nickname,
-        guess: true,
-        direction:
-          guess > game.round.lastPrice
-            ? 1
-            : guess < game.round.lastPrice
-              ? -1
-              : 0
-      }
+      action: 'guess'
     });
 
-    res.sendStatus(200);
+    res.status(200).json(data);
 
     return;
   }
