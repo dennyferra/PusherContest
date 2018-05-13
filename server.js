@@ -97,7 +97,8 @@ app.post('/guess', (req, res) => {
     res.status(200).json({
       nickname: gameUser.nickname,
       guess: true,
-      direction: guess > game.lastPrice ? 1 : guess < game.lastPrice ? -1 : 0
+      direction:
+        guess > game.round.lastPrice ? 1 : guess < game.round.lastPrice ? -1 : 0
     });
 
     return;
