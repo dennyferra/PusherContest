@@ -75,14 +75,16 @@ app.get('/play', (req, res) => {
 app.post('/guess', (req, res) => {
   console.log('guess', req.body);
   const user = req.body.user;
-  const guess = req.body.guess;
+  let guess = req.body.guess;
 
   if (!user || !guess || !user.id) {
     res.status(400).json({ error: 'User or Guess cannot be null' });
     return;
   }
 
-  if (parseFloat(guess) !== guess) {
+  guess = parseFloat(guess);
+
+  if (typeof guess !== 'number') {
     res.status(400).json({ error: 'Guess is not valid' });
     return;
   }
