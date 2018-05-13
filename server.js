@@ -116,16 +116,16 @@ app.post('/pusher/auth', (req, res) => {
     return;
   }
 
-  const user = game.users.filter(user => user.id === userId);
-  if (user.length <= 0) {
+  const user = game.users.find(user => user.id === userId);
+  if (!user) {
     res.sendStatus(403);
     return;
   }
 
   var presenceData = {
-    user_id: user[0].id,
+    user_id: user.id,
     user_info: {
-      name: user[0].nickname
+      name: user.nickname
     }
   };
   var auth = game.pusher.authenticate(socketId, channel, presenceData);
