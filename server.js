@@ -102,7 +102,8 @@ app.post('/guess', (req, res) => {
     };
 
     game.pusher.trigger('game', 'status', {
-      action: 'guess'
+      action: 'guess',
+      data: data
     });
 
     res.status(200).json(data);
