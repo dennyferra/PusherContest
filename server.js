@@ -73,6 +73,7 @@ app.get('/play', (req, res) => {
 });
 
 app.post('/guess', (req, res) => {
+  console.log('guess', req.body);
   const user = req.body.user;
   const guess = req.body.guess;
 
