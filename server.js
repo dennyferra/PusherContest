@@ -89,11 +89,10 @@ app.post('/guess', (req, res) => {
     return;
   }
 
-  const gameUser = game.users.filter(f => f.id === user.id);
+  let gameUser = game.users.find(f => f.id === user.id);
+
   if (gameUser && !gameUser.guess) {
     gameUser.guess = guess;
-
-    console.log(gameUser);
 
     res.status(200).json({
       nickname: gameUser.nickname,
