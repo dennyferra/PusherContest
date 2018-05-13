@@ -93,6 +93,8 @@ app.post('/guess', (req, res) => {
   if (gameUser && !gameUser.guess) {
     gameUser.guess = guess;
 
+    console.log(gameUser);
+
     res.status(200).json({
       nickname: gameUser.nickname,
       guess: true,
