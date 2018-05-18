@@ -86,7 +86,8 @@ class Game {
 
         this.pusher.trigger('game', 'status', {
           action: 'round-winner',
-          test: winner
+          test: winner,
+          diff: Math.abs(nextPrice - winner.guess)
         });
 
         setTimeout(() => {
