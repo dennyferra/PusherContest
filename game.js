@@ -30,9 +30,7 @@ class Game {
   setGuess(user, guess) {
     const game = this;
     return new Promise((resolve, reject) => {
-      console.log('all users', game.users);
       let gameUser = game.users.find(f => f.id === user.id);
-      console.log('gameUSer', gameUser);
       if (gameUser && !gameUser.guess) {
         gameUser.guess = guess;
 
@@ -56,16 +54,13 @@ class Game {
 
         resolve(data);
       } else {
-        console.log('Rejecting');
         reject(gameUser);
       }
     });
   }
 
   resetGuesses() {
-    this.users.map(u => {
-      if (u.hasOwnProperty('guess')) u.guess = null;
-    });
+    this.users.map(u => (u.guess = null));
   }
 
   timerDone() {
@@ -80,7 +75,7 @@ class Game {
         // TODO: Calculate winner(s)
         const winner = this.users.reduce((acc, u) => {
           if (acc === null && u.hasOwnProperty('guess')) return u;
-          if (acc !== null && u.hasOwnProperty('guess')) {
+          if (acc !== null && u.hasOwnProperty('guess') && u.guess != null) {
             const prev = Math.abs(nextPrice - acc.guess);
             const curr = Math.abs(nextPrice - u.guess);
 
