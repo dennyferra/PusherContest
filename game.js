@@ -30,6 +30,7 @@ class Game {
   setGuess(user, guess) {
     const game = this;
     return new Promise((resolve, reject) => {
+      console.log('all users', game.users);
       let gameUser = game.users.find(f => f.id === user.id);
       console.log('gameUSer', gameUser);
       if (gameUser && !gameUser.guess) {
