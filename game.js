@@ -30,6 +30,7 @@ class Game {
   setGuess(user, guess) {
     return new Promise((resolve, reject) => {
       let gameUser = this.users.find(f => f.id === user.id);
+      console.log('gameUSer', gameUser);
       if (gameUser && !gameUser.guess) {
         gameUser.guess = guess;
 
@@ -44,6 +45,8 @@ class Game {
                 : 0
         };
 
+        console.log('Pushing trigger', data);
+
         this.pusher.trigger('game', 'status', {
           action: 'guess',
           data: data
@@ -51,6 +54,7 @@ class Game {
 
         resolve(data);
       } else {
+        console.log('Rejecting');
         reject(gameUser);
       }
     });
