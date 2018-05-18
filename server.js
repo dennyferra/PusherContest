@@ -83,35 +83,17 @@ app.post('/guess', (req, res) => {
   }
 
   guess = parseFloat(guess);
-
   if (typeof guess !== 'number') {
     res.status(400).json({ error: 'Guess is not valid' });
     return;
   }
 
-  let gameUser = game.users.find(f => f.id === user.id);
-
-  if (gameUser && !gameUser.guess) {
-    gameUser.guess = guess;
-
-    const data = {
-      nickname: gameUser.nickname,
-      guess: true,
-      direction:
-        guess > game.round.lastPrice ? 1 : guess < game.round.lastPrice ? -1 : 0
-    };
-
-    game.pusher.trigger('game', 'status', {
-      action: 'guess',
-      data: data
+  return game
+    .setGuess(user, guess)
+    .then(res.status(200).json)
+    .catch(() => {
+      res.status(400).json({ error: 'User is invalid or already guessed' });
     });
-
-    res.status(200).json(data);
-
-    return;
-  }
-
-  res.status(400).json({ error: 'Invalid user' });
 });
 
 app.post('/pusher/auth', (req, res) => {

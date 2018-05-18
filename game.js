@@ -27,6 +27,41 @@ class Game {
     this.timerDone();
   }
 
+  setGuess(user, guess) {
+    return new Promise((resolve, reject) => {
+      let gameUser = this.users.find(f => f.id === user.id);
+      if (gameUser && !gameUser.guess) {
+        gameUser.guess = guess;
+
+        const data = {
+          nickname: gameUser.nickname,
+          guess: true,
+          direction:
+            guess > this.round.lastPrice
+              ? 1
+              : guess < this.round.lastPrice
+                ? -1
+                : 0
+        };
+
+        this.pusher.trigger('game', 'status', {
+          action: 'guess',
+          data: data
+        });
+
+        resolve(data);
+      } else {
+        reject();
+      }
+    });
+  }
+
+  resetGuesses() {
+    this.users.map(u => {
+      if (u.hasOwnProperty('guess')) u.guess = null;
+    });
+  }
+
   timerDone() {
     if (this.timeout) clearTimeout(this.timeout);
 
@@ -37,12 +72,25 @@ class Game {
         let nextPrice = (data && data.PRICE) || this.lastPrice;
 
         // TODO: Calculate winner(s)
+        const winner = this.users.reduce((acc, u) => {
+          if (acc === null && u.hasOwnProperty('guess')) return u;
+          if (acc !== null && u.hasOwnProperty('guess')) {
+            const prev = Math.abs(nextPrice - acc.guess);
+            const curr = Math.abs(nextPrice - u.guess);
+
+            if (curr < prev) return u;
+            return acc;
+          }
+          return acc;
+        }, null);
+
         this.pusher.trigger('game', 'status', {
           action: 'round-winner',
-          test: 123
+          test: winner
         });
 
         setTimeout(() => {
+          this.resetGuesses();
           var date = new Date().getTime();
           date += this.roundTime;
           this.round.end = new Date(date);
