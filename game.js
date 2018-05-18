@@ -51,7 +51,7 @@ class Game {
 
         resolve(data);
       } else {
-        reject();
+        reject(gameUser);
       }
     });
   }
