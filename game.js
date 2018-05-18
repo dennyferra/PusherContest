@@ -74,8 +74,8 @@ class Game {
 
         // TODO: Calculate winner(s)
         const winner = this.users.reduce((acc, u) => {
-          if (acc === null && u.hasOwnProperty('guess')) return u;
-          if (acc !== null && u.hasOwnProperty('guess') && u.guess != null) {
+          if (u.hasOwnProperty('guess') && u.guess != null) {
+            if (acc === null) return u;
             const prev = Math.abs(nextPrice - acc.guess);
             const curr = Math.abs(nextPrice - u.guess);
 
