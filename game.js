@@ -28,8 +28,9 @@ class Game {
   }
 
   setGuess(user, guess) {
+    const game = this;
     return new Promise((resolve, reject) => {
-      let gameUser = this.users.find(f => f.id === user.id);
+      let gameUser = game.users.find(f => f.id === user.id);
       console.log('gameUSer', gameUser);
       if (gameUser && !gameUser.guess) {
         gameUser.guess = guess;
@@ -38,16 +39,16 @@ class Game {
           nickname: gameUser.nickname,
           guess: true,
           direction:
-            guess > this.round.lastPrice
+            guess > game.round.lastPrice
               ? 1
-              : guess < this.round.lastPrice
+              : guess < game.round.lastPrice
                 ? -1
                 : 0
         };
 
         console.log('Pushing trigger', data);
 
-        this.pusher.trigger('game', 'status', {
+        game.pusher.trigger('game', 'status', {
           action: 'guess',
           data: data
         });
