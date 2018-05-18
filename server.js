@@ -90,7 +90,7 @@ app.post('/guess', (req, res) => {
 
   return game
     .setGuess(user, guess)
-    .then(res.status(200).json)
+    .then(data => res.status(200).json(data))
     .catch(() => {
       res.status(400).json({ error: 'User is invalid or already guessed' });
     });
