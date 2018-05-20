@@ -91,7 +91,7 @@ class Game {
           action: 'round-winner',
           name: winner ? winner.nickname : null,
           guess: winner ? winner.guess : null,
-          diff: winner ? Math.abs(nextPrice - winner.guess) : 0
+          diff: winner ? Math.abs(nextPrice - winner.guess).toFixed(2) : 0
         });
 
         setTimeout(() => {
