@@ -85,7 +85,12 @@ class Game {
           return acc;
         }, null);
 
-        console.log('winner', winner);
+        console.log(
+          'winner',
+          nextPrice,
+          winner.guess,
+          nextPrice - winner.guess
+        );
 
         this.pusher.trigger('game', 'status', {
           action: 'round-winner',
