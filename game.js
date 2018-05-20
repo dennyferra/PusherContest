@@ -87,7 +87,8 @@ class Game {
 
         this.pusher.trigger('game', 'status', {
           action: 'round-winner',
-          test: winner,
+          name: winner ? winner.info.name : null,
+          guess: winner ? winner.guess : null,
           diff: winner ? Math.abs(nextPrice - winner.guess) : 0
         });
 
