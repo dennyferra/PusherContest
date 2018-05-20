@@ -85,6 +85,8 @@ class Game {
           return acc;
         }, null);
 
+        console.log('winner', winner);
+
         this.pusher.trigger('game', 'status', {
           action: 'round-winner',
           name: winner ? winner.info.name : null,
