@@ -88,8 +88,8 @@ class Game {
         console.log(
           'winner',
           nextPrice,
-          winner.guess,
-          nextPrice - winner.guess
+          winner ? winner.guess : 0,
+          winner ? nextPrice - winner.guess : 0
         );
 
         this.pusher.trigger('game', 'status', {
