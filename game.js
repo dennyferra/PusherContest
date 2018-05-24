@@ -11,7 +11,7 @@ class Game {
       encrypted: true
     });
 
-    this.roundTime = 60 * 1000;
+    this.roundTime = 2 * 60 * 1000;
     this.newRoundWait = 15 * 1000;
 
     this.presence = null;
@@ -72,7 +72,6 @@ class Game {
       .then(data => {
         let nextPrice = (data && data.PRICE) || this.lastPrice;
 
-        // TODO: Calculate winner(s)
         const winner = this.users.reduce((acc, u) => {
           if (u.hasOwnProperty('guess') && u.guess != null) {
             if (acc === null) return u;
@@ -148,15 +147,6 @@ class Game {
       });
   }
 
-  // ISSUE:
-
-  // game: Array[2]
-  // 0: Object
-  // id: "7yDBlhVZLyyZoLTjJDNptw=="
-  // nickname: "ggggggggggg"
-  // nicknameLower: "ggggggggggg"
-  // 1: "7yDBlhVZLyyZoLTjJDNptw=="
-
   webhook(req, res) {
     if (!this.synced) {
       res.sendStatus(200);
@@ -171,11 +161,6 @@ class Game {
     }
 
     const data = req.body;
-
-    // Example
-    // { channel: 'presence-game',
-    // user_id: '+QksjftPxQuBRA4DX2WkyA==',
-    // name: 'member_removed' }
 
     if (data.events) {
       data.events.forEach(ev => {
